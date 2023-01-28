@@ -1,0 +1,61 @@
+/**
+ *  \mainpage   [NOMBRE DE LA APLICACIÓN SW]
+ *
+ *	Descripción de la funcionalidad de la aplicación.
+ *
+ *
+ *  \section    arquitectura_sec    Arquitectura del Sistema SW
+ *
+ *  \image      html    descarga.png
+ *
+ *  \section    ra_sec  Estado de Riesgos Controlados
+ *
+ *  Esta sección describe los riesgos eléctricos y fuego del producto, controlado por la aplicación.
+ *
+ *  \subsection RA  Análisis de Riesgos
+ *
+ *  |R#|Descripción| Estado de riesgo controlado RA|
+ *  |:--:|:--:|:--:|
+ *  | R1| Listar todos los posibles riesgos del producto|RAi|
+ *  | R2|  |RAj|
+ *
+ *  \subsection RAS Estado de Riesgos Controlados
+ *
+ *  |RA#| Descripción del Estado |
+ *  |:--:| :--: |
+ *  | RA0| Power-up o reset. Describir estado de DO (relés), DI, Maniobras, etc|
+ *  | RA1|   |
+ *
+ * \section	interfaces_sec	Interfaces
+ *
+ *	\subsection	hwsw	Interfaces HW-SW
+ *
+ *	| Elemento HW | Funcionalidad | Interfaz |
+ *	|:--: | :--: | :--: |
+ *	|Interruptor DC | Abre/Cierra circuito de DC del bus | GPIO8|
+ *
+ *	\subsection	swsw	Interfaces SW-SW
+ *
+ *	| Dispositivos | Interfaz |Protocolo |
+ *	|:--: | :--: | :--: |
+ *	| DSP - SOM| RS485 | Modbus RTU|
+ * 
+ *
+ *	Historial de Cambios
+ *	--------------------
+ *	| Fecha | Autores | Versión | Descripción |
+ *	|:--: |:--:|:--:|:--:|
+ *	| 10/12/2022| Dr. Carlos Romero |1.0.0.0|Primera edición|
+ *
+ *	ToDos
+ *	-----
+ *
+ *	\todo	Lista de características futuras
+ *	\todo	Feature2
+ *
+ *
+ *  \copyright  ZGR R&D AIE
+ *
+ */
+
+
