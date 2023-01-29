@@ -125,6 +125,7 @@
  *  9. Copia en RAM el código definido en Flash para ser ejecutado en RAM
  *  10. Inicializa periféricos
  *  11. Configura el Watchdog
+ *  12. Crea la tabla de vectores de interrupción
  *  12. Inicializa la clase Kernel
  *
  *  En caso de que al comprobar el estado del microcontrolador identificara un fallo catastrófico, aborta el arranque
@@ -182,6 +183,7 @@ void Configure_RAM(void);
 void Copy_Flash_to_RAM(void);
 void Init_Peripherals(void);
 void Configure_Watchdog(void);
+void Create_Vector_Table(void);
 void Boot_Failure(void);
 void Init_Kernel_Object(int16);
 
@@ -210,13 +212,13 @@ void Pre_Kernel(void)
         Copy_Flash_to_RAM();
         Init_Peripherals();
         Configure_Watchdog();
+        Create_Vector_Table();
         Init_Kernel_Object(estado);
     }
     else
     {
         Diagnosys.Write_Event(UNEXPECTED_PROCESSOR);
         Boot_Failure();
-
     }
 
 
@@ -250,6 +252,7 @@ void Pre_Kernel(void)
         Copy_Flash_to_RAM();
         Init_Peripherals();
         Configure_Watchdog();
+        Create_Vector_Table();
         Init_Kernel_Object(estado);
     }
     else
@@ -391,6 +394,11 @@ void Init_Peripherals(void)
 }
 
 void Configure_Watchdog(void)
+{
+
+}
+
+void Create_Vector_Table(void)
 {
 
 }

@@ -15,9 +15,6 @@
 #define	RAMLS5_FORCLA_SIZE		(0x800-CLA_SCRATCHPAD_SIZE)
 #define	RAMLS5_FORCLA			(0x0000A800+CLA_SCRATCHPAD_SIZE)
 
-
-
-
 MEMORY
 {
 PAGE 0 :
@@ -195,7 +192,7 @@ PAGE 1 :
 SECTIONS
 {
 	// SECCIONES UTILIZADAS POR TI
-   codestart        : > BEGIN,     			PAGE = 0, ALIGN(4)
+   .codestart       : > BEGIN,     			PAGE = 0, ALIGN(4)
    .text            : >	FLASH_MEMORY,		PAGE = 0, ALIGN(4)
    .cinit           : > FLASH_MEMORY,		PAGE = 0, ALIGN(4)
    .pinit           : > FLASH_MEMORY,		PAGE = 0, ALIGN(4)

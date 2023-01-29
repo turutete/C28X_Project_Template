@@ -1,7 +1,7 @@
 ******************************************************************************
              TMS320C2000 Linker PC v22.6.0                     
 ******************************************************************************
->> Linked Sun Jan 29 12:06:04 2023
+>> Linked Sun Jan 29 15:10:26 2023
 
 OUTPUT FILE NAME:   <C28X_Project_Template.out>
 ENTRY POINT SYMBOL: "_c_int00"  address: 000801a5
@@ -21,7 +21,7 @@ PAGE 0:
   RAMLS4                0000a000   00000800  00000000  00000800  RWIX
   RAMGS0                0000c000   00002000  00000000  00002000  RWIX
   RAMGS1                0000e000   00002000  00000000  00002000  RWIX
-  BEGIN                 00080000   00000002  00000000  00000002  RWIX
+  BEGIN                 00080000   00000002  00000002  00000000  RWIX
   FLASH_MEMORY          00080002   0001ffee  000002a2  0001fd4c  RWIX
   RESET                 003fffc0   00000002  00000000  00000002  RWIX
 
@@ -160,6 +160,10 @@ SECTION ALLOCATION MAP
  output                                  attributes/
 section   page    origin      length       input sections
 --------  ----  ----------  ----------   ----------------
+.codestart 
+*          0    00080000    00000002     
+                  00080000    00000002     GotoMain.obj (.codestart)
+
 .text      0    00080004    00000288     
                   00080004    00000140     realtime.obj (.text)
                   00080144    00000061     realtime.obj (.text:retain)
@@ -673,8 +677,9 @@ MODULE SUMMARY
                                                                                     
     .\Kernel\Src\Core\
        core.obj                         0      0                  6                 
+       GotoMain.obj                     2      0                  0                 
     +--+--------------------------------+------+------------------+--------------------+
-       Total:                           0      0                  6                 
+       Total:                           2      0                  6                 
                                                                                     
     .\Kernel\Src\Diagnosys\
        diagnosys.obj                    0      0                  10                
@@ -705,12 +710,12 @@ MODULE SUMMARY
                                                                                     
        Stack:                           0      0                  512               
     +--+--------------------------------+------+------------------+--------------------+
-       Grand Total:                     648    24                 10541             
+       Grand Total:                     650    24                 10541             
 
 
 LINKER GENERATED MEMRANGE CRC TABLES
 
-_ccs_flash_checksum @ 00000000 records: 2, size/record: 6, table size: 18, algorithm=C28_CHECKSUM_16(ID=13), CRC: 00006cbb
+_ccs_flash_checksum @ 00000000 records: 2, size/record: 6, table size: 18, algorithm=C28_CHECKSUM_16(ID=13), CRC: 00006f7c
 	BEGIN: page=0, load addr=00080000, size=00000002
 	FLASH_MEMORY: page=0, load addr=00080002, size=0001ffee
 
