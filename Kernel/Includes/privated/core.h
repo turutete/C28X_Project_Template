@@ -12,7 +12,7 @@
 #include    <system.h>
 #include    <diagnosys.h>
 
-#define DCDC_POWERON_TRIALS     5                   // Reintentos de lectura de DCDCSTS.SWSEQDON=1. No hay una especificación
+#define DCDC_POWERON_TRIALS     5                   // Reintentos de lectura de DCDCSTS.SWSEQDON=1. No hay una especificaciï¿½n
                                                     // concreta en el datasheet. Probablemente deba ser inmediato.
 #define DCDC_POWERON_80us       (80*CLOCKIN_MHZ)    //  Valor aproximado para contador de 80us en DCDC poweron
 
@@ -37,7 +37,7 @@ struct  KERNEL_STATUS
 
 typedef struct
 {
-    //Atributos públicos
+    //Atributos pÃºblicos
     union
     {
         uint32 all;
@@ -45,9 +45,9 @@ typedef struct
 
     } kernel_status;
 
-    //Métodos públicos
-    void (* Pre_Kernel)(void);        // Método preparatorio de kernel
-    void (* Kernel)(void);            // Método público Kernel
+    //MÃ©todos pÃºblicos
+    void (* Pre_Kernel)(void);        // MÃ©todo preparatorio de kernel
+    void (* Kernel)(void);            // MÃ©todo pÃºblico Kernel
 
 } clase_kernel;
 

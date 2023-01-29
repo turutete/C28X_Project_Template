@@ -10,7 +10,7 @@
 
 #include    <kernel_types.h>
 
-#define SIZE_SYSTEM_LOG     32      // Tama�o del log del sistema (n� de eventos m�ximo que almacena
+#define SIZE_SYSTEM_LOG     32      // Tamaño del log del sistema (nº de eventos máximo que almacena
 
 enum SYSTEM_LOG_EVENTS
 {
@@ -43,10 +43,10 @@ typedef struct
 } clase_diagnosys;
 
 
-// Clase p�blica
+// Clase pública
 extern clase_diagnosys Diagnosys;
 
-// M�todo privado s�lo para el Kernel
+// Método privado sólo para el Kernel
 extern void Init_System_Log(void);
 
 #ifdef  UNIT_TESTS
