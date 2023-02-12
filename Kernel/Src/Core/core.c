@@ -165,6 +165,11 @@
 
 #include <core.h>
 
+//  Establecimiento de variables en la sección .kernelvar reservada para el kernel en RAMM1
+#pragma DATA_SECTION(kernel,".kernelvar")
+
+// Establecimiento de métodos en la sección .flashinit del kernel
+#pragma CODE_SECTION(Configure_Flash,".flashinit")
 
 // Definición de atributos públicos y privados
 clase_kernel kernel;
@@ -178,6 +183,7 @@ void Power_On(void);
 int16 Check_Processor(void);
 void Check_Reset_Cause(void);
 void Init_Flash(void);
+void Configure_Flash(void);
 void Configure_Clocks(void);
 void Configure_RAM(void);
 void Copy_Flash_to_RAM(void);
@@ -187,9 +193,6 @@ void Create_Vector_Table(void);
 void Boot_Failure(void);
 void Init_Kernel_Object(int16);
 
-
-// Definición del objeto kernel
-clase_kernel kernel;
 
 #ifndef UNIT_TESTS
 // Métodos de core.c
@@ -370,6 +373,26 @@ void Check_Reset_Cause(void)
 
 void Init_Flash(void)
 {
+    // Copia el código inicializador de la flash en RAM
+    uint32 * pcode_read;
+    uint32 * pcode_write;
+    uint16  size;
+    uint16  veces;
+
+    pcode_read=_FlashinitLoadStart;
+    pcode_write=_FlashinitRunStart;
+    size=_FlashinitLoadSize;
+
+    for(veces=0;veces<size;veces++)
+        *(pcode_write++)=*(pcode_read++);
+
+    // Y lo ejecuta
+    Configure_Flash();
+}
+
+void Configure_Flash(void)
+{
+
 
 }
 
@@ -400,6 +423,22 @@ void Configure_Watchdog(void)
 
 void Create_Vector_Table(void)
 {
+    DINT;
+    PieCtrlRegs.PIECTRL.bit.ENPIE=1;
+    EALLOW;
+
+    // Configuración de la tabla de vectores de interrupción del PIE
+    //PieVectTable.x=&isr_name;
+
+
+    // Habilitación de los PIEIER.x
+
+    //Habilitación de bits en IER
+
+    // Habilitación de interrupciones en los periféricos
+
+
+    EINT;
 
 }
 

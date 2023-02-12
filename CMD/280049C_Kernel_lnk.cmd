@@ -5,6 +5,10 @@
 // se ajusta automáticamente el tamaño disponible en RAMLS5 para memoria de datos de CLA.
 //	El tamaño máximo permitido para el tamaño de la pila de CLA es 0x800, que es el tamaño de RAMLS5.
 //	Si el valor definido fuera mayor que este límite, se tome el valor límite.
+//
+//	KERNEL utiliza la memoria RAM M0 (0x30B=779) como memoria de programa. Es donde se ejecuta el código de actualización
+//	de software (UPGRADER).
+
 #define CLA_SCRATCHPAD_SIZE		0x100
 
 #if	CLA_SCRATCHPAD_SIZE>0x800
@@ -18,10 +22,6 @@
 MEMORY
 {
 PAGE 0 :
- 
-   RAMM0           	: origin = 0x0000F5, length = 0x00030B
-   PIEVECT			: origin = 0x000D00, length = 0x000200
-
    RAMLS0          	: origin = 0x008000, length = 0x000800
    RAMLS1          	: origin = 0x008800, length = 0x000800
    RAMLS2      		: origin = 0x009000, length = 0x000800
@@ -55,6 +55,7 @@ GROUP {      /* GROUP memory ranges for crc/checksum of entire flash */
 PAGE 1 :
 
    BOOT_RSVD   	: origin = 0x000002, length = 0x0000F3     /* Part of M0, BOOT rom will use this for stack */
+   RAMM0        : origin = 0x0000F5, length = 0x00030B
    RAMM1       	: origin = 0x000400, length = 0x000400     /* on-chip RAM block M1 */
 
    // BLOQUES DE MEMORIA UTILIZADAS POR LA CPU
@@ -199,8 +200,8 @@ SECTIONS
    .switch          : > FLASH_MEMORY,		PAGE = 0, ALIGN(4)
    .reset           : > RESET,     			PAGE = 0, TYPE = DSECT /* not used, */
 
-   .stack           : > RAMM1,     			PAGE = 1
-   .ebss            : > RAMGS2,    			PAGE = 1
+   .stack           : > RAMM0,     			PAGE = 1
+   .ebss            : > RAMGS2 | RAMGS3, 	PAGE = 1
    .esysmem         : > RAMGS2,    			PAGE = 1
    .econst          : > FLASH_MEMORY,		PAGE = 0, ALIGN(4)
 
@@ -219,17 +220,26 @@ SECTIONS
                         	PAGE = 0, ALIGN(4)
 
 	// SECCIONES UTILIZADAS POR PROJECT_TEMPLATE
-    .cpuvar       	: > RAMGS2 | RAMGS3,	PAGE = 1
+	.kernelvar		: > RAMM1,				PAGE = 1
 
-	.cpuinram		: {}	LOAD = FLASH_MEMORY,
-                        	RUN = RAMGS0 | RAMGS1 ,
+	UNION 					RUN = RAMGS0 | RAMGS1
+	{
+	.cpuinram		:		LOAD = FLASH_MEMORY,	PAGE = 0,	ALIGN(4),
                         	LOAD_START(_CpuinramLoadStart),
                         	LOAD_SIZE(_CpuinramLoadSize),
                         	LOAD_END(_CpuinramLoadEnd),
                         	RUN_START(_CpuinramRunStart),
                         	RUN_SIZE(_CpuinramRunSize),
-                        	RUN_END(_CpuinramRunEnd),
-                        	PAGE = 0, ALIGN(4)
+                        	RUN_END(_CpuinramRunEnd)
+
+     .flashinit		:		LOAD = FLASH_MEMORY,	PAGE = 0, 	ALIGN(4),
+                       		LOAD_START(_FlashinitLoadStart),
+                        	LOAD_SIZE(_FlashinitLoadSize),
+                        	LOAD_END(_FlashinitLoadEnd),
+                        	RUN_START(_FlashinitRunStart),
+                        	RUN_SIZE(_FlashinitRunSize),
+                        	RUN_END(_FlashinitRunEnd)
+ 	}
 
    /* crc/checksum section configured as COPY section to avoid including in executable */
    .TI.memcrc       	: type = COPY

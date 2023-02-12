@@ -51,5 +51,10 @@ typedef struct
 
 } clase_kernel;
 
+
+extern uint32 * _FlashinitLoadStart;
+extern uint32 *_FlashinitRunStart;
+extern uint16 _FlashinitLoadSize;
+
 #endif
 

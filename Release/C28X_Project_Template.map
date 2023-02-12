@@ -1,7 +1,7 @@
 ******************************************************************************
              TMS320C2000 Linker PC v22.6.0                     
 ******************************************************************************
->> Linked Sun Jan 29 15:10:26 2023
+>> Linked Sun Feb 12 15:05:04 2023
 
 OUTPUT FILE NAME:   <C28X_Project_Template.out>
 ENTRY POINT SYMBOL: "_c_int00"  address: 000801a5
@@ -12,8 +12,6 @@ MEMORY CONFIGURATION
          name            origin    length      used     unused   attr    fill
 ----------------------  --------  ---------  --------  --------  ----  --------
 PAGE 0:
-  RAMM0                 000000f5   0000030b  00000000  0000030b  RWIX
-  PIEVECT               00000d00   00000200  00000000  00000200  RWIX
   RAMLS0                00008000   00000800  00000000  00000800  RWIX
   RAMLS1                00008800   00000800  00000000  00000800  RWIX
   RAMLS2                00009000   00000800  00000000  00000800  RWIX
@@ -27,7 +25,8 @@ PAGE 0:
 
 PAGE 1:
   BOOT_RSVD             00000002   000000f3  00000000  000000f3  RWIX
-  RAMM1                 00000400   00000400  00000200  00000200  RWIX
+  RAMM0                 000000f5   0000030b  0000030a  00000001  RWIX
+  RAMM1                 00000400   00000400  000000e6  0000031a  RWIX
   ADCARESULTS           00000b00   00000020  00000018  00000008  RWIX
   ADCBRESULTS           00000b20   00000020  00000018  00000008  RWIX
   ADCCRESULTS           00000b40   00000020  00000018  00000008  RWIX
@@ -117,7 +116,7 @@ PAGE 1:
   RAMLS5                0000a900   00000700  00000000  00000700  RWIX
   RAMLS6                0000b000   00000800  00000000  00000800  RWIX
   RAMLS7                0000b800   00000800  00000000  00000800  RWIX
-  RAMGS2                00010000   00002000  000000ac  00001f54  RWIX
+  RAMGS2                00010000   00002000  000000a2  00001f5e  RWIX
   RAMGS3                00012000   00002000  00000000  00002000  RWIX
   CANA                  00048000   00000800  00000164  0000069c  RWIX
   CANB                  0004a000   00000800  00000164  0000069c  RWIX
@@ -188,8 +187,14 @@ section   page    origin      length       input sections
 .reset     0    003fffc0    00000002     DSECT
                   003fffc0    00000002     rts2800_fpu32.lib : boot28.asm.obj (.reset)
 
-.stack     1    00000400    00000200     UNINITIALIZED
-                  00000400    00000200     --HOLE--
+.cpuinram 
+*          0    0000c000    00000000     UNINITIALIZED
+
+.flashinit 
+*          0    0000c000    00000000     UNINITIALIZED
+
+.stack     1    000000f6    0000030a     UNINITIALIZED
+                  000000f6    0000030a     --HOLE--
 
 AdcaResultRegsFile 
 *          1    00000b00    00000018     UNINITIALIZED
@@ -523,20 +528,21 @@ GpioDataRegsFile
 *          1    00007f00    0000003a     UNINITIALIZED
                   00007f00    0000003a     f28004x_globalvariabledefs.obj (GpioDataRegsFile)
 
-.ebss      1    00010000    000000ac     UNINITIALIZED
+.ebss      1    00010000    000000a2     UNINITIALIZED
                   00010000    00000070     realtime.obj (.ebss:_timer_service)
-                  00010070    0000000a     diagnosys.obj (.ebss)
-                  0001007a    00000006     core.obj (.ebss)
+                  00010070    00000006     rts2800_fpu32.lib : exit.c.obj (.ebss)
+                  00010076    00000002                       : _lock.c.obj (.ebss:__lock)
+                  00010078    00000002                       : _lock.c.obj (.ebss:__unlock)
+                  0001007a    00000006     --HOLE--
                   00010080    00000022     realtime.obj (.ebss)
-                  000100a2    00000006     rts2800_fpu32.lib : exit.c.obj (.ebss)
-                  000100a8    00000002                       : _lock.c.obj (.ebss:__lock)
-                  000100aa    00000002                       : _lock.c.obj (.ebss:__unlock)
 
 CLA1_Prog 
 *          0    00008000    00000000     UNINITIALIZED
 
-.cpuinram 
-*          0    0000c000    00000000     UNINITIALIZED
+.kernelvar 
+*          1    00000400    000000e6     UNINITIALIZED
+                  00000400    000000e0     diagnosys.obj (.kernelvar)
+                  000004e0    00000006     core.obj (.kernelvar)
 
 .TI.memcrc 
 *          0    00000000    00000012     COPY SECTION
@@ -682,9 +688,9 @@ MODULE SUMMARY
        Total:                           2      0                  6                 
                                                                                     
     .\Kernel\Src\Diagnosys\
-       diagnosys.obj                    0      0                  10                
+       diagnosys.obj                    0      0                  224               
     +--+--------------------------------+------+------------------+--------------------+
-       Total:                           0      0                  10                
+       Total:                           0      0                  224               
                                                                                     
     .\Kernel\Src\Real Time\
        realtime.obj                     417    0                  146               
@@ -708,14 +714,14 @@ MODULE SUMMARY
     +--+--------------------------------+------+------------------+--------------------+
        Total:                           222    24                 10                
                                                                                     
-       Stack:                           0      0                  512               
+       Stack:                           0      0                  778               
     +--+--------------------------------+------+------------------+--------------------+
-       Grand Total:                     650    24                 10541             
+       Grand Total:                     650    24                 11021             
 
 
 LINKER GENERATED MEMRANGE CRC TABLES
 
-_ccs_flash_checksum @ 00000000 records: 2, size/record: 6, table size: 18, algorithm=C28_CHECKSUM_16(ID=13), CRC: 00006f7c
+_ccs_flash_checksum @ 00000000 records: 2, size/record: 6, table size: 18, algorithm=C28_CHECKSUM_16(ID=13), CRC: 000062e4
 	BEGIN: page=0, load addr=00080000, size=00000002
 	FLASH_MEMORY: page=0, load addr=00080002, size=0001ffee
 
@@ -724,7 +730,15 @@ GLOBAL DATA SYMBOLS: SORTED BY DATA PAGE
 
 address     data page           name
 --------    ----------------    ----
-00000400      10 (00000400)     __stack
+000000f6       3 (000000c0)     __stack
+
+00000400      10 (00000400)     _index_oldest
+00000401      10 (00000400)     _index_newest
+00000402      10 (00000400)     _Diagnosys
+
+00000440      11 (00000440)     _system_log
+
+000004e0      13 (000004c0)     _kernel
 
 00000b00      2c (00000b00)     _AdcaResultRegs
 00000b20      2c (00000b00)     _AdcbResultRegs
@@ -876,20 +890,16 @@ address     data page           name
 
 00010000     400 (00010000)     _timer_service
 
-00010070     401 (00010040)     _index_oldest
-00010071     401 (00010040)     _index_newest
-00010072     401 (00010040)     _Diagnosys
-0001007a     401 (00010040)     _kernel
+00010070     401 (00010040)     ___TI_enable_exit_profile_output
+00010072     401 (00010040)     ___TI_cleanup_ptr
+00010074     401 (00010040)     ___TI_dtors_ptr
+00010076     401 (00010040)     __lock
+00010078     401 (00010040)     __unlock
 
 00010080     402 (00010080)     _ind_timer_service
 00010081     402 (00010080)     _timers_used
 00010082     402 (00010080)     _reloj_sistema
 00010086     402 (00010080)     _RealTime
-000100a2     402 (00010080)     ___TI_enable_exit_profile_output
-000100a4     402 (00010080)     ___TI_cleanup_ptr
-000100a6     402 (00010080)     ___TI_dtors_ptr
-000100a8     402 (00010080)     __lock
-000100aa     402 (00010080)     __unlock
 
 00048000    1200 (00048000)     _CanaRegs
 
@@ -1008,7 +1018,7 @@ abs   00000000  _CpuinramRunSize
 1     0005f140  _DcsmBank1Z2Regs                     
 1     0005f070  _DcsmCommonRegs                      
 1     0005d000  _DevCfgRegs                          
-1     00010072  _Diagnosys                           
+1     00000402  _Diagnosys                           
 0     0008009c  _Diff_Time                           
 1     00007980  _DmaClaSrcSelRegs                    
 1     00001000  _DmaRegs                             
@@ -1045,6 +1055,12 @@ abs   00000000  _CpuinramRunSize
 1     0005e938  _EradHWBP8Regs                       
 1     0005f800  _Flash0CtrlRegs                      
 1     0005fb00  _Flash0EccRegs                       
+0     0000c000  _FlashinitLoadEnd                    
+abs   00000000  _FlashinitLoadSize                   
+0     0000c000  _FlashinitLoadStart                  
+0     0000c000  _FlashinitRunEnd                     
+abs   00000000  _FlashinitRunSize                    
+0     0000c000  _FlashinitRunStart                   
 1     00006680  _FsiRxaRegs                          
 1     00006600  _FsiTxaRegs                          
 0     00080016  _Get_Clock                           
@@ -1093,12 +1109,12 @@ abs   00000000  _CpuinramRunSize
 1     00007000  _WdRegs                              
 1     00007920  _XbarRegs                            
 1     00007070  _XintRegs                            
-1     00000600  __STACK_END                          
-abs   00000200  __STACK_SIZE                         
+1     00000400  __STACK_END                          
+abs   0000030a  __STACK_SIZE                         
 0     00000000  __TI_MEMRANGE_CRC__ccs_flash_checksum
-1     000100a4  ___TI_cleanup_ptr                    
-1     000100a6  ___TI_dtors_ptr                      
-1     000100a2  ___TI_enable_exit_profile_output     
+1     00010072  ___TI_cleanup_ptr                    
+1     00010074  ___TI_dtors_ptr                      
+1     00010070  ___TI_enable_exit_profile_output     
 abs   ffffffff  ___TI_pprof_out_hndl                 
 abs   ffffffff  ___TI_prof_data_size                 
 abs   ffffffff  ___TI_prof_data_start                
@@ -1109,26 +1125,27 @@ abs   ffffffff  ___c_args__
 abs   ffffffff  ___pinit__                           
 0     00080004  ___text__                            
 0     00080265  __args_main                          
-1     000100a8  __lock                               
+1     00010076  __lock                               
 0     00080288  __nop                                
 0     00080284  __register_lock                      
 0     00080280  __register_unlock                    
-1     00000400  __stack                              
+1     000000f6  __stack                              
 0     0008028b  __system_post_cinit                  
 0     00080289  __system_pre_init                    
-1     000100aa  __unlock                             
+1     00010078  __unlock                             
 0     000801fb  _abort                               
 0     000801a5  _c_int00                             
 0     00000000  _ccs_flash_checksum                  
 0     00080224  _copy_in                             
 0     000801fd  _exit                                
 1     00010080  _ind_timer_service                   
-1     00010071  _index_newest                        
-1     00010070  _index_oldest                        
-1     0001007a  _kernel                              
+1     00000401  _index_newest                        
+1     00000400  _index_oldest                        
+1     000004e0  _kernel                              
 0     00080277  _main                                
 0     00080248  _memcpy                              
 1     00010082  _reloj_sistema                       
+1     00000440  _system_log                          
 1     00010000  _timer_service                       
 1     00010081  _timers_used                         
 abs   ffffffff  binit                                
@@ -1151,6 +1168,10 @@ page  address   name
 0     0000c000  _CpuinramLoadStart                   
 0     0000c000  _CpuinramRunEnd                      
 0     0000c000  _CpuinramRunStart                    
+0     0000c000  _FlashinitLoadEnd                    
+0     0000c000  _FlashinitLoadStart                  
+0     0000c000  _FlashinitRunEnd                     
+0     0000c000  _FlashinitRunStart                   
 0     00080004  .text                                
 0     00080004  _Stop_Timer                          
 0     00080004  ___text__                            
@@ -1186,8 +1207,13 @@ page  address   name
 0     0008028c  ___etext__                           
 0     0008028c  cinit                                
 0     0008028c  etext                                
-1     00000400  __stack                              
-1     00000600  __STACK_END                          
+1     000000f6  __stack                              
+1     00000400  __STACK_END                          
+1     00000400  _index_oldest                        
+1     00000401  _index_newest                        
+1     00000402  _Diagnosys                           
+1     00000440  _system_log                          
+1     000004e0  _kernel                              
 1     00000b00  _AdcaResultRegs                      
 1     00000b20  _AdcbResultRegs                      
 1     00000b40  _AdccResultRegs                      
@@ -1272,19 +1298,15 @@ page  address   name
 1     00007c00  _GpioCtrlRegs                        
 1     00007f00  _GpioDataRegs                        
 1     00010000  _timer_service                       
-1     00010070  _index_oldest                        
-1     00010071  _index_newest                        
-1     00010072  _Diagnosys                           
-1     0001007a  _kernel                              
+1     00010070  ___TI_enable_exit_profile_output     
+1     00010072  ___TI_cleanup_ptr                    
+1     00010074  ___TI_dtors_ptr                      
+1     00010076  __lock                               
+1     00010078  __unlock                             
 1     00010080  _ind_timer_service                   
 1     00010081  _timers_used                         
 1     00010082  _reloj_sistema                       
 1     00010086  _RealTime                            
-1     000100a2  ___TI_enable_exit_profile_output     
-1     000100a4  ___TI_cleanup_ptr                    
-1     000100a6  ___TI_dtors_ptr                      
-1     000100a8  __lock                               
-1     000100aa  __unlock                             
 1     00048000  _CanaRegs                            
 1     0004a000  _CanbRegs                            
 1     0005d000  _DevCfgRegs                          
@@ -1320,7 +1342,9 @@ abs   00000000  _ClainramLoadSize
 abs   00000000  _ClainramRunSize                     
 abs   00000000  _CpuinramLoadSize                    
 abs   00000000  _CpuinramRunSize                     
-abs   00000200  __STACK_SIZE                         
+abs   00000000  _FlashinitLoadSize                   
+abs   00000000  _FlashinitRunSize                    
+abs   0000030a  __STACK_SIZE                         
 abs   ffffffff  ___TI_pprof_out_hndl                 
 abs   ffffffff  ___TI_prof_data_size                 
 abs   ffffffff  ___TI_prof_data_start                
@@ -1330,4 +1354,4 @@ abs   ffffffff  ___pinit__
 abs   ffffffff  binit                                
 abs   ffffffff  pinit                                
 
-[188 symbols]
+[195 symbols]

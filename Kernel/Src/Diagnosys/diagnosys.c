@@ -68,6 +68,12 @@
 
 // Definición de atributos privados
 
+#pragma DATA_SECTION    (system_log,".kernelvar")
+#pragma DATA_SECTION    (index_oldest,".kernelvar")
+#pragma DATA_SECTION    (index_newest,".kernelvar")
+#pragma DATA_SECTION    (Diagnosys,".kernelvar")
+
+
 typedef struct
 {
     TIME_STAMPING tiempo;
