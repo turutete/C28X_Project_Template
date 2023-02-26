@@ -16,7 +16,7 @@
                                                     // concreta en el datasheet. Probablemente deba ser inmediato.
 #define DCDC_POWERON_80us       (80*CLOCKIN_MHZ)    //  Valor aproximado para contador de 80us en DCDC poweron
 
-
+#define TRIAL_10ms              25                  // TRIAL_10ms=Round(10e-3/(1024*4/10e6)). Apróximadamente 10ms con INTOSC2=10e6 Hz
 
 enum DCDC_1200mV_VALUES
 {

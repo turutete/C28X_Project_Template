@@ -24,6 +24,7 @@
 #define CLOCKIN_MHZ         10      // Frecuencia del reloj o cristal externo en MHz. Si el valor es 0, se utiliza
                                     // el reloj interno del microprocesador
 
+
 // Por defecto se selecciona la frecuencia máxima de reloj de la CPU de la familia. Pero es posible poner un valor
 // menor. Pero nunca deberá ponerse un valor superior al indicado en el datasheet del procesador.
 
@@ -33,6 +34,15 @@
 
 #if (TMS320F2837XD==SI || TMS320F2837XS==SI)
 #define CLOCKSYS_MHZ        200
+#endif
+
+
+// Definir si la fuente del reloj de Sistema es externa (true=se usa fuente externa. false=no se usa fuente externa)
+#define CLOCK_EXTERN        false
+
+// Si se usa fuente externa, definir si es singled ended o dual ended (cristal o resonador) (true= opción seleccionada. false= opción no seleccionada)
+#if CLOCK_EXTERN==true
+#define SINGLE_ENDED        true
 #endif
 
 

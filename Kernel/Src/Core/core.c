@@ -392,12 +392,72 @@ void Init_Flash(void)
 
 void Configure_Flash(void)
 {
+    Flash0CtrlRegs.FRD_INTF_CTRL.bit.DATA_CACHE_EN=0;
+    Flash0CtrlRegs.FRD_INTF_CTRL.bit.PREFETCH_EN=0;
 
+    Flash0CtrlRegs.FRDCNTL.bit.RWAIT=4;                     // 4 estados de espera para 100Mz
+
+    Flash0CtrlRegs.FRD_INTF_CTRL.bit.DATA_CACHE_EN=1;
+    Flash0CtrlRegs.FRD_INTF_CTRL.bit.PREFETCH_EN=1;
+
+    Flash0CtrlRegs.FBAC.bit.BAGP=0;                         // Verificar el valor
+
+    Flash0CtrlRegs.FBFALLBACK.bit.BNKPWR0=3;                // Verificar valor
+    Flash0CtrlRegs.FBFALLBACK.bit.BNKPWR1=3;
 
 }
 
 void Configure_Clocks(void)
 {
+    uint16 veces;
+    int16 flag=0;
+    uint16 trial=0;
+
+    EALLOW;
+//#if CLOCK_EXTERN==true
+//#if SINGLE_ENDED==true
+    // External single ended clock source
+
+#else
+    // External dual ended clock source
+    ClkCfgRegs.XTALCR.bit.OSCOFF=0;
+    while(flag==0)
+    {
+        for(veces=0;veces<4;veces++)
+        {
+            ClkCfgRegs.X1CNT.bit.CLR=1;
+            while(ClkCfgRegs.X1CNT.bit.X1CNT!=0x3FF);
+        }
+        ClkCfgRegs.CLKSRCCTL1.bit.OSCCLKSRCSEL=1;
+
+        if(ClkCfgRegs.MCDCR.bit.MCLKSTS==0)
+            flag=1;
+        else
+        {
+            trial++;
+            if(trial>=TRIAL_10ms)
+            {
+                flag=-1;
+            }
+        }
+    }
+
+    if(flag==-1)
+    {
+        // Error del reloj de tiempo real
+    }
+
+
+
+#endif
+
+#else
+    // INTOSC2 (opción por defecto)
+    ClkCfgRegs.XTALCR.bit.OSCOFF=1;
+    ClkCfgRegs.XTALCR.bit.SE=0;
+
+#endif
+    EDIS;
 
 }
 
