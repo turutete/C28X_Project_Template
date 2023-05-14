@@ -52,6 +52,24 @@ typedef struct
 } clase_kernel;
 
 
+// LISTA DE DISPOSITIVOS DE LA FAMILIA C28X SOPORTADOS
+typedef enum Dispositivo
+{
+    F280049C,
+    F28379D,
+    UNSUPPORTED
+};
+
+typedef struct
+{
+    Dispositivo device;
+    uint16 cpu_id;
+    uint32 device_id;
+    uint32 serial_number;
+    uint32 revision_id;
+}device_info;
+
+extern device_info dispositivo;
 extern uint32 * _FlashinitLoadStart;
 extern uint32 *_FlashinitRunStart;
 extern uint16 _FlashinitLoadSize;

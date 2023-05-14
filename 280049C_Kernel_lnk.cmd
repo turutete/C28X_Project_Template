@@ -1,3 +1,4 @@
+
 // KERNEL reserva RAMLS0-RAMLS4 para memoria de programa de CLA, y RAMLS5-RAMLS7 para memoria de datos
 // de CLA.
 // La sección CLASCRATCH es la pila de la CLA. En el código siguiente se define el tamaño de la pila, y
@@ -56,14 +57,6 @@ PAGE 1 :
    BOOT_RSVD   	: origin = 0x000002, length = 0x0000F3     /* Part of M0, BOOT rom will use this for stack */
    RAMM0        : origin = 0x0000F5, length = 0x00030B
    RAMM1       	: origin = 0x000400, length = 0x000400     /* on-chip RAM block M1 */
-
-   CLASCRATCH	: origin = 0x00A800, length = CLA_SCRATCHPAD_SIZE
-   RAMLS5      	: origin = RAMLS5_FORCLA, length = RAMLS5_FORCLA_SIZE
-   RAMLS6      	: origin = 0x00B000, length = 0x000800
-   RAMLS7      	: origin = 0x00B800, length = 0x000800
-
-   RAMGS2      	: origin = 0x010000, length = 0x002000
-   RAMGS3      	: origin = 0x012000, length = 0x002000
 
    // BLOQUES DE MEMORIA UTILIZADAS POR LA CPU
    ADCARESULTS	: origin = 0x000B00, length = 0x000020
@@ -187,7 +180,13 @@ PAGE 1 :
    UIDREGS		: origin = 0x0703C0, length = 0x000010
    //---------------------------------------------------
 
+   CLASCRATCH	: origin = 0x00A800, length = CLA_SCRATCHPAD_SIZE
+   RAMLS5      	: origin = RAMLS5_FORCLA, length = RAMLS5_FORCLA_SIZE
+   RAMLS6      	: origin = 0x00B000, length = 0x000800
+   RAMLS7      	: origin = 0x00B800, length = 0x000800
 
+   RAMGS2      	: origin = 0x010000, length = 0x002000
+   RAMGS3      	: origin = 0x012000, length = 0x002000
 }
 
 

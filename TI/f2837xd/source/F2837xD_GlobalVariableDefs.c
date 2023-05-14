@@ -1,12 +1,14 @@
 //###########################################################################
 //
-// FILE:    f28004x_globalvariabledefs.c
+// FILE:    F2837xD_globalvariabledefs.c
 //
-// TITLE:   f28004x Global Variables and Data Section Pragmas.
+// TITLE:   F2837xD Global Variables and Data Section Pragmas.
 //
 //###########################################################################
+//
+// $Release Date:  $
 // $Copyright:
-// Copyright (C) 2022 Texas Instruments Incorporated - http://www.ti.com/
+// Copyright (C) 2013-2022 Texas Instruments Incorporated - http://www.ti.com/
 //
 // Redistribution and use in source and binary forms, with or without 
 // modification, are permitted provided that the following conditions 
@@ -37,8 +39,8 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 // $
 //###########################################################################
-#ifdef _F280049C
-#include "f28004x_device.h"     // f28004x Headerfile Include File
+#ifdef _F28379D
+#include "F2837xD_device.h"     // F2837xD Headerfile Include File
 
 //---------------------------------------------------------------------------
 // Define Global Peripheral Variables:
@@ -78,6 +80,14 @@ volatile struct ADC_REGS AdccRegs;
 
 //----------------------------------------
 #ifdef __cplusplus
+#pragma DATA_SECTION("AdcdRegsFile")
+#else
+#pragma DATA_SECTION(AdcdRegs,"AdcdRegsFile");
+#endif
+volatile struct ADC_REGS AdcdRegs;
+
+//----------------------------------------
+#ifdef __cplusplus
 #pragma DATA_SECTION("AdcaResultRegsFile")
 #else
 #pragma DATA_SECTION(AdcaResultRegs,"AdcaResultRegsFile");
@@ -102,12 +112,23 @@ volatile struct ADC_RESULT_REGS AdccResultRegs;
 
 //----------------------------------------
 #ifdef __cplusplus
+#pragma DATA_SECTION("AdcdResultRegsFile")
+#else
+#pragma DATA_SECTION(AdcdResultRegs,"AdcdResultRegsFile");
+#endif
+volatile struct ADC_RESULT_REGS AdcdResultRegs;
+
+#ifdef CPU1
+//----------------------------------------
+#ifdef __cplusplus
 #pragma DATA_SECTION("AnalogSubsysRegsFile")
 #else
 #pragma DATA_SECTION(AnalogSubsysRegs,"AnalogSubsysRegsFile");
 #endif
 volatile struct ANALOG_SUBSYS_REGS AnalogSubsysRegs;
+#endif // ifdef CPU1
 
+#if __TI_COMPILER_VERSION__ >= 16006000
 //----------------------------------------
 #ifdef __cplusplus
 #pragma DATA_SECTION("CanaRegsFile")
@@ -115,7 +136,9 @@ volatile struct ANALOG_SUBSYS_REGS AnalogSubsysRegs;
 #pragma DATA_SECTION(CanaRegs,"CanaRegsFile");
 #endif
 volatile struct CAN_REGS CanaRegs;
+#endif // __TI_COMPILER_VERSION__ >= 16006000
 
+#if __TI_COMPILER_VERSION__ >= 16006000
 //----------------------------------------
 #ifdef __cplusplus
 #pragma DATA_SECTION("CanbRegsFile")
@@ -123,14 +146,7 @@ volatile struct CAN_REGS CanaRegs;
 #pragma DATA_SECTION(CanbRegs,"CanbRegsFile");
 #endif
 volatile struct CAN_REGS CanbRegs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("ClaPromCrc0RegsFile")
-#else
-#pragma DATA_SECTION(ClaPromCrc0Regs,"ClaPromCrc0RegsFile");
-#endif
-volatile struct CLA_PROM_CRC32_REGS ClaPromCrc0Regs;
+#endif // __TI_COMPILER_VERSION__ >= 16006000
 
 //----------------------------------------
 #ifdef __cplusplus
@@ -236,13 +252,15 @@ volatile struct CLB_LOGIC_CONTROL_REGS Clb3LogicCtrlRegs;
 #endif
 volatile struct CLB_LOGIC_CONTROL_REGS Clb4LogicCtrlRegs;
 
+#ifdef CPU1
 //----------------------------------------
 #ifdef __cplusplus
-#pragma DATA_SECTION("CLBXbarRegsFile")
+#pragma DATA_SECTION("ClbXbarRegsFile")
 #else
-#pragma DATA_SECTION(CLBXbarRegs,"CLBXbarRegsFile");
+#pragma DATA_SECTION(ClbXbarRegs,"ClbXbarRegsFile");
 #endif
-volatile struct CLB_XBAR_REGS CLBXbarRegs;
+volatile struct CLB_XBAR_REGS ClbXbarRegs;
+#endif // ifdef CPU1
 
 //----------------------------------------
 #ifdef __cplusplus
@@ -310,6 +328,14 @@ volatile struct CMPSS_REGS Cmpss7Regs;
 
 //----------------------------------------
 #ifdef __cplusplus
+#pragma DATA_SECTION("Cmpss8RegsFile")
+#else
+#pragma DATA_SECTION(Cmpss8Regs,"Cmpss8RegsFile");
+#endif
+volatile struct CMPSS_REGS Cmpss8Regs;
+
+//----------------------------------------
+#ifdef __cplusplus
 #pragma DATA_SECTION("CpuTimer0RegsFile")
 #else
 #pragma DATA_SECTION(CpuTimer0Regs,"CpuTimer0RegsFile");
@@ -358,43 +384,11 @@ volatile struct DAC_REGS DacbRegs;
 
 //----------------------------------------
 #ifdef __cplusplus
-#pragma DATA_SECTION("Dcc0RegsFile")
+#pragma DATA_SECTION("DaccRegsFile")
 #else
-#pragma DATA_SECTION(Dcc0Regs,"Dcc0RegsFile");
+#pragma DATA_SECTION(DaccRegs,"DaccRegsFile");
 #endif
-volatile struct DCC_REGS Dcc0Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("DcsmBank0Z1RegsFile")
-#else
-#pragma DATA_SECTION(DcsmBank0Z1Regs,"DcsmBank0Z1RegsFile");
-#endif
-volatile struct DCSM_BANK0_Z1_REGS DcsmBank0Z1Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("DcsmBank0Z2RegsFile")
-#else
-#pragma DATA_SECTION(DcsmBank0Z2Regs,"DcsmBank0Z2RegsFile");
-#endif
-volatile struct DCSM_BANK0_Z2_REGS DcsmBank0Z2Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("DcsmBank1Z1RegsFile")
-#else
-#pragma DATA_SECTION(DcsmBank1Z1Regs,"DcsmBank1Z1RegsFile");
-#endif
-volatile struct DCSM_BANK1_Z1_REGS DcsmBank1Z1Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("DcsmBank1Z2RegsFile")
-#else
-#pragma DATA_SECTION(DcsmBank1Z2Regs,"DcsmBank1Z2RegsFile");
-#endif
-volatile struct DCSM_BANK1_Z2_REGS DcsmBank1Z2Regs;
+volatile struct DAC_REGS DaccRegs;
 
 //----------------------------------------
 #ifdef __cplusplus
@@ -406,11 +400,29 @@ volatile struct DCSM_COMMON_REGS DcsmCommonRegs;
 
 //----------------------------------------
 #ifdef __cplusplus
+#pragma DATA_SECTION("DcsmZ1RegsFile")
+#else
+#pragma DATA_SECTION(DcsmZ1Regs,"DcsmZ1RegsFile");
+#endif
+volatile struct DCSM_Z1_REGS DcsmZ1Regs;
+
+//----------------------------------------
+#ifdef __cplusplus
+#pragma DATA_SECTION("DcsmZ2RegsFile")
+#else
+#pragma DATA_SECTION(DcsmZ2Regs,"DcsmZ2RegsFile");
+#endif
+volatile struct DCSM_Z2_REGS DcsmZ2Regs;
+
+#ifdef CPU1
+//----------------------------------------
+#ifdef __cplusplus
 #pragma DATA_SECTION("DevCfgRegsFile")
 #else
 #pragma DATA_SECTION(DevCfgRegs,"DevCfgRegsFile");
 #endif
 volatile struct DEV_CFG_REGS DevCfgRegs;
+#endif // ifdef CPU1
 
 //----------------------------------------
 #ifdef __cplusplus
@@ -478,11 +490,39 @@ volatile struct ECAP_REGS ECap6Regs;
 
 //----------------------------------------
 #ifdef __cplusplus
-#pragma DATA_SECTION("ECap7RegsFile")
+#pragma DATA_SECTION("Emif1ConfigRegsFile")
 #else
-#pragma DATA_SECTION(ECap7Regs,"ECap7RegsFile");
+#pragma DATA_SECTION(Emif1ConfigRegs,"Emif1ConfigRegsFile");
 #endif
-volatile struct ECAP_REGS ECap7Regs;
+volatile struct EMIF1_CONFIG_REGS Emif1ConfigRegs;
+
+#ifdef CPU1
+//----------------------------------------
+#ifdef __cplusplus
+#pragma DATA_SECTION("Emif2ConfigRegsFile")
+#else
+#pragma DATA_SECTION(Emif2ConfigRegs,"Emif2ConfigRegsFile");
+#endif
+volatile struct EMIF2_CONFIG_REGS Emif2ConfigRegs;
+#endif // ifdef CPU1
+
+//----------------------------------------
+#ifdef __cplusplus
+#pragma DATA_SECTION("Emif1RegsFile")
+#else
+#pragma DATA_SECTION(Emif1Regs,"Emif1RegsFile");
+#endif
+volatile struct EMIF_REGS Emif1Regs;
+
+#ifdef CPU1
+//----------------------------------------
+#ifdef __cplusplus
+#pragma DATA_SECTION("Emif2RegsFile")
+#else
+#pragma DATA_SECTION(Emif2Regs,"Emif2RegsFile");
+#endif
+volatile struct EMIF_REGS Emif2Regs;
+#endif // ifdef CPU1
 
 //----------------------------------------
 #ifdef __cplusplus
@@ -550,11 +590,45 @@ volatile struct EPWM_REGS EPwm8Regs;
 
 //----------------------------------------
 #ifdef __cplusplus
+#pragma DATA_SECTION("EPwm9RegsFile")
+#else
+#pragma DATA_SECTION(EPwm9Regs,"EPwm9RegsFile");
+#endif
+volatile struct EPWM_REGS EPwm9Regs;
+
+//----------------------------------------
+#ifdef __cplusplus
+#pragma DATA_SECTION("EPwm10RegsFile")
+#else
+#pragma DATA_SECTION(EPwm10Regs,"EPwm10RegsFile");
+#endif
+volatile struct EPWM_REGS EPwm10Regs;
+
+//----------------------------------------
+#ifdef __cplusplus
+#pragma DATA_SECTION("EPwm11RegsFile")
+#else
+#pragma DATA_SECTION(EPwm11Regs,"EPwm11RegsFile");
+#endif
+volatile struct EPWM_REGS EPwm11Regs;
+
+//----------------------------------------
+#ifdef __cplusplus
+#pragma DATA_SECTION("EPwm12RegsFile")
+#else
+#pragma DATA_SECTION(EPwm12Regs,"EPwm12RegsFile");
+#endif
+volatile struct EPWM_REGS EPwm12Regs;
+
+#ifdef CPU1
+//----------------------------------------
+#ifdef __cplusplus
 #pragma DATA_SECTION("EPwmXbarRegsFile")
 #else
 #pragma DATA_SECTION(EPwmXbarRegs,"EPwmXbarRegsFile");
 #endif
 volatile struct EPWM_XBAR_REGS EPwmXbarRegs;
+#endif // ifdef CPU1
 
 //----------------------------------------
 #ifdef __cplusplus
@@ -574,107 +648,11 @@ volatile struct EQEP_REGS EQep2Regs;
 
 //----------------------------------------
 #ifdef __cplusplus
-#pragma DATA_SECTION("EradCounter1RegsFile")
+#pragma DATA_SECTION("EQep3RegsFile")
 #else
-#pragma DATA_SECTION(EradCounter1Regs,"EradCounter1RegsFile");
+#pragma DATA_SECTION(EQep3Regs,"EQep3RegsFile");
 #endif
-volatile struct ERAD_COUNTER_REGS EradCounter1Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("EradCounter2RegsFile")
-#else
-#pragma DATA_SECTION(EradCounter2Regs,"EradCounter2RegsFile");
-#endif
-volatile struct ERAD_COUNTER_REGS EradCounter2Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("EradCounter3RegsFile")
-#else
-#pragma DATA_SECTION(EradCounter3Regs,"EradCounter3RegsFile");
-#endif
-volatile struct ERAD_COUNTER_REGS EradCounter3Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("EradCounter4RegsFile")
-#else
-#pragma DATA_SECTION(EradCounter4Regs,"EradCounter4RegsFile");
-#endif
-volatile struct ERAD_COUNTER_REGS EradCounter4Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("EradGlobalRegsFile")
-#else
-#pragma DATA_SECTION(EradGlobalRegs,"EradGlobalRegsFile");
-#endif
-volatile struct ERAD_GLOBAL_REGS EradGlobalRegs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("EradHWBP1RegsFile")
-#else
-#pragma DATA_SECTION(EradHWBP1Regs,"EradHWBP1RegsFile");
-#endif
-volatile struct ERAD_HWBP_REGS EradHWBP1Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("EradHWBP2RegsFile")
-#else
-#pragma DATA_SECTION(EradHWBP2Regs,"EradHWBP2RegsFile");
-#endif
-volatile struct ERAD_HWBP_REGS EradHWBP2Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("EradHWBP3RegsFile")
-#else
-#pragma DATA_SECTION(EradHWBP3Regs,"EradHWBP3RegsFile");
-#endif
-volatile struct ERAD_HWBP_REGS EradHWBP3Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("EradHWBP4RegsFile")
-#else
-#pragma DATA_SECTION(EradHWBP4Regs,"EradHWBP4RegsFile");
-#endif
-volatile struct ERAD_HWBP_REGS EradHWBP4Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("EradHWBP5RegsFile")
-#else
-#pragma DATA_SECTION(EradHWBP5Regs,"EradHWBP5RegsFile");
-#endif
-volatile struct ERAD_HWBP_REGS EradHWBP5Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("EradHWBP6RegsFile")
-#else
-#pragma DATA_SECTION(EradHWBP6Regs,"EradHWBP6RegsFile");
-#endif
-volatile struct ERAD_HWBP_REGS EradHWBP6Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("EradHWBP7RegsFile")
-#else
-#pragma DATA_SECTION(EradHWBP7Regs,"EradHWBP7RegsFile");
-#endif
-volatile struct ERAD_HWBP_REGS EradHWBP7Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("EradHWBP8RegsFile")
-#else
-#pragma DATA_SECTION(EradHWBP8Regs,"EradHWBP8RegsFile");
-#endif
-volatile struct ERAD_HWBP_REGS EradHWBP8Regs;
+volatile struct EQEP_REGS EQep3Regs;
 
 //----------------------------------------
 #ifdef __cplusplus
@@ -694,20 +672,13 @@ volatile struct FLASH_ECC_REGS Flash0EccRegs;
 
 //----------------------------------------
 #ifdef __cplusplus
-#pragma DATA_SECTION("FsiRxaRegsFile")
+#pragma DATA_SECTION("FlashPumpSemaphoreRegsFile")
 #else
-#pragma DATA_SECTION(FsiRxaRegs,"FsiRxaRegsFile");
+#pragma DATA_SECTION(FlashPumpSemaphoreRegs,"FlashPumpSemaphoreRegsFile");
 #endif
-volatile struct FSI_RX_REGS FsiRxaRegs;
+volatile struct FLASH_PUMP_SEMAPHORE_REGS FlashPumpSemaphoreRegs;
 
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("FsiTxaRegsFile")
-#else
-#pragma DATA_SECTION(FsiTxaRegs,"FsiTxaRegsFile");
-#endif
-volatile struct FSI_TX_REGS FsiTxaRegs;
-
+#ifdef CPU1
 //----------------------------------------
 #ifdef __cplusplus
 #pragma DATA_SECTION("GpioCtrlRegsFile")
@@ -715,6 +686,7 @@ volatile struct FSI_TX_REGS FsiTxaRegs;
 #pragma DATA_SECTION(GpioCtrlRegs,"GpioCtrlRegsFile");
 #endif
 volatile struct GPIO_CTRL_REGS GpioCtrlRegs;
+#endif // ifdef CPU1
 
 //----------------------------------------
 #ifdef __cplusplus
@@ -726,22 +698,6 @@ volatile struct GPIO_DATA_REGS GpioDataRegs;
 
 //----------------------------------------
 #ifdef __cplusplus
-#pragma DATA_SECTION("HRCap6RegsFile")
-#else
-#pragma DATA_SECTION(HRCap6Regs,"HRCap6RegsFile");
-#endif
-volatile struct HRCAP_REGS HRCap6Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("HRCap7RegsFile")
-#else
-#pragma DATA_SECTION(HRCap7Regs,"HRCap7RegsFile");
-#endif
-volatile struct HRCAP_REGS HRCap7Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
 #pragma DATA_SECTION("I2caRegsFile")
 #else
 #pragma DATA_SECTION(I2caRegs,"I2caRegsFile");
@@ -750,19 +706,41 @@ volatile struct I2C_REGS I2caRegs;
 
 //----------------------------------------
 #ifdef __cplusplus
+#pragma DATA_SECTION("I2cbRegsFile")
+#else
+#pragma DATA_SECTION(I2cbRegs,"I2cbRegsFile");
+#endif
+volatile struct I2C_REGS I2cbRegs;
+
+#ifdef CPU1
+//----------------------------------------
+#ifdef __cplusplus
 #pragma DATA_SECTION("InputXbarRegsFile")
 #else
 #pragma DATA_SECTION(InputXbarRegs,"InputXbarRegsFile");
 #endif
 volatile struct INPUT_XBAR_REGS InputXbarRegs;
+#endif // ifdef CPU1
 
+#ifdef CPU1
 //----------------------------------------
 #ifdef __cplusplus
-#pragma DATA_SECTION("LinaRegsFile")
+#pragma DATA_SECTION("IpcRegsFile")
 #else
-#pragma DATA_SECTION(LinaRegs,"LinaRegsFile");
+#pragma DATA_SECTION(IpcRegs,"IpcRegsFile");
 #endif
-volatile struct LIN_REGS LinaRegs;
+volatile struct IPC_REGS_CPU1 IpcRegs;
+#endif // ifdef CPU1
+
+#ifdef CPU2
+//----------------------------------------
+#ifdef __cplusplus
+#pragma DATA_SECTION("IpcRegsFile")
+#else
+#pragma DATA_SECTION(IpcRegs,"IpcRegsFile");
+#endif
+volatile struct IPC_REGS_CPU2 IpcRegs;
+#endif // ifdef CPU2
 
 //----------------------------------------
 #ifdef __cplusplus
@@ -782,12 +760,29 @@ volatile struct MEM_CFG_REGS MemCfgRegs;
 
 //----------------------------------------
 #ifdef __cplusplus
+#pragma DATA_SECTION("McbspaRegsFile")
+#else
+#pragma DATA_SECTION(McbspaRegs,"McbspaRegsFile");
+#endif
+volatile struct McBSP_REGS McbspaRegs;
+
+//----------------------------------------
+#ifdef __cplusplus
+#pragma DATA_SECTION("McbspbRegsFile")
+#else
+#pragma DATA_SECTION(McbspbRegs,"McbspbRegsFile");
+#endif
+volatile struct McBSP_REGS McbspbRegs;
+
+//----------------------------------------
+#ifdef __cplusplus
 #pragma DATA_SECTION("NmiIntruptRegsFile")
 #else
 #pragma DATA_SECTION(NmiIntruptRegs,"NmiIntruptRegsFile");
 #endif
 volatile struct NMI_INTRUPT_REGS NmiIntruptRegs;
 
+#ifdef CPU1
 //----------------------------------------
 #ifdef __cplusplus
 #pragma DATA_SECTION("OutputXbarRegsFile")
@@ -795,70 +790,7 @@ volatile struct NMI_INTRUPT_REGS NmiIntruptRegs;
 #pragma DATA_SECTION(OutputXbarRegs,"OutputXbarRegsFile");
 #endif
 volatile struct OUTPUT_XBAR_REGS OutputXbarRegs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("SysPeriphAcRegsFile")
-#else
-#pragma DATA_SECTION(SysPeriphAcRegs,"SysPeriphAcRegsFile");
-#endif
-volatile struct PERIPH_AC_REGS SysPeriphAcRegs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("Pga1RegsFile")
-#else
-#pragma DATA_SECTION(Pga1Regs,"Pga1RegsFile");
-#endif
-volatile struct PGA_REGS Pga1Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("Pga2RegsFile")
-#else
-#pragma DATA_SECTION(Pga2Regs,"Pga2RegsFile");
-#endif
-volatile struct PGA_REGS Pga2Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("Pga3RegsFile")
-#else
-#pragma DATA_SECTION(Pga3Regs,"Pga3RegsFile");
-#endif
-volatile struct PGA_REGS Pga3Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("Pga4RegsFile")
-#else
-#pragma DATA_SECTION(Pga4Regs,"Pga4RegsFile");
-#endif
-volatile struct PGA_REGS Pga4Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("Pga5RegsFile")
-#else
-#pragma DATA_SECTION(Pga5Regs,"Pga5RegsFile");
-#endif
-volatile struct PGA_REGS Pga5Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("Pga6RegsFile")
-#else
-#pragma DATA_SECTION(Pga6Regs,"Pga6RegsFile");
-#endif
-volatile struct PGA_REGS Pga6Regs;
-
-//----------------------------------------
-#ifdef __cplusplus
-#pragma DATA_SECTION("Pga7RegsFile")
-#else
-#pragma DATA_SECTION(Pga7Regs,"Pga7RegsFile");
-#endif
-volatile struct PGA_REGS Pga7Regs;
+#endif // ifdef CPU1
 
 //----------------------------------------
 #ifdef __cplusplus
@@ -878,11 +810,21 @@ volatile struct PIE_VECT_TABLE PieVectTable;
 
 //----------------------------------------
 #ifdef __cplusplus
-#pragma DATA_SECTION("PmbusaRegsFile")
+#pragma DATA_SECTION("RomPrefetchRegsFile")
 #else
-#pragma DATA_SECTION(PmbusaRegs,"PmbusaRegsFile");
+#pragma DATA_SECTION(RomPrefetchRegs,"RomPrefetchRegsFile");
 #endif
-volatile struct PMBUS_REGS PmbusaRegs;
+volatile struct ROM_PREFETCH_REGS RomPrefetchRegs;
+
+#ifdef CPU1
+//----------------------------------------
+#ifdef __cplusplus
+#pragma DATA_SECTION("RomWaitStateRegsFile")
+#else
+#pragma DATA_SECTION(RomWaitStateRegs,"RomWaitStateRegsFile");
+#endif
+volatile struct ROM_WAIT_STATE_REGS RomWaitStateRegs;
+#endif // ifdef CPU1
 
 //----------------------------------------
 #ifdef __cplusplus
@@ -902,11 +844,35 @@ volatile struct SCI_REGS ScibRegs;
 
 //----------------------------------------
 #ifdef __cplusplus
+#pragma DATA_SECTION("ScicRegsFile")
+#else
+#pragma DATA_SECTION(ScicRegs,"ScicRegsFile");
+#endif
+volatile struct SCI_REGS ScicRegs;
+
+//----------------------------------------
+#ifdef __cplusplus
+#pragma DATA_SECTION("ScidRegsFile")
+#else
+#pragma DATA_SECTION(ScidRegs,"ScidRegsFile");
+#endif
+volatile struct SCI_REGS ScidRegs;
+
+//----------------------------------------
+#ifdef __cplusplus
 #pragma DATA_SECTION("Sdfm1RegsFile")
 #else
 #pragma DATA_SECTION(Sdfm1Regs,"Sdfm1RegsFile");
 #endif
 volatile struct SDFM_REGS Sdfm1Regs;
+
+//----------------------------------------
+#ifdef __cplusplus
+#pragma DATA_SECTION("Sdfm2RegsFile")
+#else
+#pragma DATA_SECTION(Sdfm2Regs,"Sdfm2RegsFile");
+#endif
+volatile struct SDFM_REGS Sdfm2Regs;
 
 //----------------------------------------
 #ifdef __cplusplus
@@ -926,11 +892,31 @@ volatile struct SPI_REGS SpibRegs;
 
 //----------------------------------------
 #ifdef __cplusplus
+#pragma DATA_SECTION("SpicRegsFile")
+#else
+#pragma DATA_SECTION(SpicRegs,"SpicRegsFile");
+#endif
+volatile struct SPI_REGS SpicRegs;
+
+#ifdef CPU1
+//----------------------------------------
+#ifdef __cplusplus
 #pragma DATA_SECTION("SyncSocRegsFile")
 #else
 #pragma DATA_SECTION(SyncSocRegs,"SyncSocRegsFile");
 #endif
 volatile struct SYNC_SOC_REGS SyncSocRegs;
+#endif // ifdef CPU1
+
+#ifdef CPU1
+//----------------------------------------
+#ifdef __cplusplus
+#pragma DATA_SECTION("UppRegsFile")
+#else
+#pragma DATA_SECTION(UppRegs,"UppRegsFile");
+#endif
+volatile struct UPP_REGS UppRegs;
+#endif // ifdef CPU1
 
 //----------------------------------------
 #ifdef __cplusplus
@@ -940,6 +926,7 @@ volatile struct SYNC_SOC_REGS SyncSocRegs;
 #endif
 volatile struct WD_REGS WdRegs;
 
+#ifdef CPU1
 //----------------------------------------
 #ifdef __cplusplus
 #pragma DATA_SECTION("XbarRegsFile")
@@ -947,6 +934,7 @@ volatile struct WD_REGS WdRegs;
 #pragma DATA_SECTION(XbarRegs,"XbarRegsFile");
 #endif
 volatile struct XBAR_REGS XbarRegs;
+#endif // ifdef CPU1
 
 //----------------------------------------
 #ifdef __cplusplus
@@ -955,8 +943,8 @@ volatile struct XBAR_REGS XbarRegs;
 #pragma DATA_SECTION(XintRegs,"XintRegsFile");
 #endif
 volatile struct XINT_REGS XintRegs;
-
 #endif
+
 
 //===========================================================================
 // End of file.

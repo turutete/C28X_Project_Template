@@ -16,26 +16,10 @@
 #define INCLUDES_SYSTEM_H_
 
 
-// SELECCIONAR EL MICROPROCESADOR. SÓLO UNO DE ELLOS PUEDE ESTAR A true. EL RESTO DEBE SER false
-#define     TMS320F2837XD   false
-#define     TMS320F2837XS   false
-#define     TMS320F28004X   true
-
 #define CLOCKIN_MHZ         10      // Frecuencia del reloj o cristal externo en MHz. Si el valor es 0, se utiliza
                                     // el reloj interno del microprocesador
 
-
-// Por defecto se selecciona la frecuencia máxima de reloj de la CPU de la familia. Pero es posible poner un valor
-// menor. Pero nunca deberá ponerse un valor superior al indicado en el datasheet del procesador.
-
-#if (TMS320F28004X==SI)
 #define CLOCKSYS_MHZ        100
-#endif
-
-#if (TMS320F2837XD==SI || TMS320F2837XS==SI)
-#define CLOCKSYS_MHZ        200
-#endif
-
 
 // Definir si la fuente del reloj de Sistema es externa (true=se usa fuente externa. false=no se usa fuente externa)
 #define CLOCK_EXTERN        false
@@ -51,17 +35,41 @@
 #define DCDC_1200mV_EXTERNO     true
 
 
+// Seleccionar periféricos que se que usa la aplicación (true: Se usa false: no se usa)
+#define ePWM_PERIPHERAL         false
+#define eCAP_PERIPHERAL         false
+#define eQEP_PERIPHERAL         false
+#define SD_PERIPHERAL           false
+#define ADC_PERIPHERAL          false
+#define GPIO_PERIPHERAL         false
+#define IXBAR_PERIPHERAL        false
+#define OXBAR_PERIPHERAL        false
+#define CMPSS_PERIPHERAL        false
+#define DAC_PERIPHERAL          false
+#define SPI_PERIPHERAL          false
+#define CAN_PERIPHERAL          false
+#define SCI_PERIPHERAL          false
+#define I2C_PERIPHERAL          false
+#define NMI_WD_PERIPHERAL       true
+#define PGA_PERIPHERAL          false
+#define PWMXBAR_PERIPHERAL      false
+#define PMBUS_PERIPHERAL        false
+#define FSI_PERIPHERAL          false
+#define LIN_PERIPHERAL          false
+#define WINDOWEDWD_PERIPHERAL   false
+#define HRPWM_PERIPHERAL        false
+#define USB_PERIPHERAL          false
+#define MCBSP_PERIPHERAL        false
+#define UPP_PERIPHERAL          false
+#define EMIF_PERIPHERAL         false
 
-// NO MODIFICAR LAS DEFINICIONES O DECLARACIONES TRAS ESTA LÍNEA DEL FICHERO
-#if (TMS320F28004X==true)
-#define F280049     0x01FF0500
-#define F280048     0x01FE0500
-#define F280045     0x01FB0500
-#define F280041     0x01F70500
-#define F280040     0x01F60500
-#endif
 
-
+enum    CLOCK_SOURCES
+{
+    INTOSC2,
+    XTAL,
+    INTOSC1
+};
 
 
 #endif /* INCLUDES_SYSTEM_H_ */
