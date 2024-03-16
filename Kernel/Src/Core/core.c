@@ -31,23 +31,23 @@
  *
  *  Aplicaciones con Kernel
  *  -----------------------
- *  El proyecto *Project_Template* es una plantilla para crear aplicaciones empotradas para la famlia C28X
+ *  El proyecto *_Project_Template_* es una plantilla para crear aplicaciones empotradas para la famlia C28X
  *  de Texas Instruments. De esta manera, para crear un nuevo proyecto, basta:
  *
- *  1. Clonar la versión más actualizada del proyecto *Project_Template* del repositorio oficial en el Workspace de nuestro
+ *  1. Clonar la versión más actualizada del proyecto *_Project_Template_* del repositorio oficial en el Workspace de nuestro
  *  ordenador.
- *  2. Configurar ***system.h*** las definiciones que se ajusten al HW real en el que se ejecutará la aplicación
+ *  2. Configurar en ***system.h*** las definiciones que se ajusten al HW real en el que se ejecutará la aplicación
  *  3. Desarrollar la aplicación dentro de la carpeta  ***Application***, de acuerdo con las reglas de
  *  desarrollo de código de UTI-SW.
  *
  *  \image  html    arquitectura_proyecto.jpg
  *
  *  El usuario sólo debe modificar el contenido del fichero ***system.h***. No debe modificar ningún otro
- *  fichero de *Kernel*.
+ *  fichero de **Kernel**.
  *
  *  En la carpeta ***Application/Src*** se ecuentra el fichero *main.c*, que lo suministra también la
  *  plantilla. En este fichero se encuentra la función main(), que incluye 2 llamadas a
- *  métodos públicos del Kernel, *kernel.Pre_kernel()* y *kernel.Kernel()*. Estas 2 llamadas deben
+ *  métodos públicos del Kernel, *_kernel.Pre_kernel()_* y *_kernel.Kernel()_*. Estas 2 llamadas deben
  *  conservarse, y en el misma posición donde están, es decir, lo primero que debe efectuarse tras un power up
  *  de la aplicación es una llamada a kernel.Prekernel(), y la última línea de main() debe ser
  *  la llamada a kernel.Kernel().
@@ -66,7 +66,7 @@
  *  *HWI*: Interrupciones HW. Son las rutinas de servicio de interrupción que ofrece la familia de
  *  microcontroladores C28X. Todas estas rutinas son parte de la capa ***HAL*** del kernel. Estas tareas
  *  se lanzan mediante el mecanismo de interrupciones asíncronas del procesador. Cada una de estas rutinas
- *  de interrupción tienen asociados *semáforos*, que permiten sincronizar su ejecución con la activación
+ *  de interrupción tienen asociados **semáforos**, que permiten sincronizar su ejecución con la activación
  *  de tareas de la aplicación.
  *
  *  *SWI*:  Interrupciones SW. Son rutinas de interrupción utilizadas por el Kernel para sincronizar
@@ -81,7 +81,7 @@
  *  ------------------------
  *  El Kernel ofrece los siguientes mecanismos de sincronización entre tareas.
  *
- *  *Semáforos*: Este mecanismo permite a cualquier tarea, de la aplicación o del kernel, a crear un objeto
+ *  *Semáforos*: Este mecanismo permite a cualquier tarea, de la aplicación o del kernel, crear un objeto
  *  semáforo, y permite que otra tarea se suscriba a este semáforo. El semáforo tiene un estado que puede
  *  ser *ON* o *OFF*. El estado *ON* sólo lo puede poner la tarea que crea el semáforo. El estado
  *  es *OFF* tras crear el semáforo, o bien tras ejecutarse la tarea suscrita.
@@ -90,6 +90,10 @@
  *  número de suscriptores viene descrito por la constante ***MAX_NUMERO_SUSCRIPTORES_SEMAFORO***, en el
  *  fichero  *semaphores.h*.
  *
+ *  Mutex
+ *  ------
+ *  Este mecanismo suspende la ejecución de una tarea el tiempo (en ms) indicado. Es decir, cuando en una tarea
+ *  se activa un mecanismo de mutex, la tarea deja de ejecutarse hasta pasado el tiempo indicado.
  *
  *  \page       page_core   Core
  *
@@ -97,7 +101,7 @@
  *  CORE es un componente del Kernel, que realiza la inicialización del sistema tras un power-up o reset
  *  e imlementa la máquina de estados del funcionamiento del Kernel.
  *
- *  Implementa 2 métodos públicos, que *deben ser ejecutados en la función main()*:
+ *  Implementa 2 métodos públicos, que **deben ser ejecutados en la función main()**:
  *
  *  * Pre_Kernel()
  *  * Kernel()
@@ -167,8 +171,8 @@
 #include <core.h>
 
 // Definiciones locales
-#define CPU1        1
-#define CPU2        2
+#define CPU1_ID     1
+#define CPU2_ID     2
 
 //  Establecimiento de variables en la sección .kernelvar reservada para el kernel en RAMM1
 #pragma DATA_SECTION(kernel,".kernelvar")
@@ -353,7 +357,7 @@ int16 Check_Processor(void)
     {
     case 0x01FF0500:
         dispositivo.device=F280049C;
-        dispositivo.cpu_id=CPU1;
+        dispositivo.cpu_id=CPU1_ID;
         if(dispositivo.revision_id>=0x00000002)
             dispositivo.serial_number=DevCfgRegs.REVID.all;
         else
@@ -361,7 +365,7 @@ int16 Check_Processor(void)
         break;
     case 0x00F90300:
         dispositivo.device=F28379D;
-        dispositivo.cpu_id=CPU1;
+        dispositivo.cpu_id=CPU1_ID;
         if(dispositivo.revision_id>=0x00000003)
             dispositivo.serial_number=DevCfgRegs.REVID.all;
         else
@@ -370,7 +374,7 @@ int16 Check_Processor(void)
 
     case 0x02F90300:
         dispositivo.device=F28379D;
-        dispositivo.cpu_id=CPU2;
+        dispositivo.cpu_id=CPU2_ID;
         if(dispositivo.revision_id>=0x00000003)
             dispositivo.serial_number=DevCfgRegs.REVID.all;
         else
@@ -379,7 +383,7 @@ int16 Check_Processor(void)
 
     default:
         dispositivo.device=UNSUPPORTED;
-        dispositivo.cpu_id=CPU1;
+        dispositivo.cpu_id=CPU1_ID;
         dispositivo.serial_number=0x00000000;
         resultador=ERROR;
         break;

@@ -53,12 +53,12 @@ typedef struct
 
 
 // LISTA DE DISPOSITIVOS DE LA FAMILIA C28X SOPORTADOS
-typedef enum Dispositivo
+typedef enum
 {
     F280049C,
     F28379D,
     UNSUPPORTED
-};
+} Dispositivo;
 
 typedef struct
 {

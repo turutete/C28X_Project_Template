@@ -17,11 +17,11 @@
  *
  *  Esta función realiza secuencialmente las siguientes tareas:
  *
- *  1. Lanza las tareas preparatorias del *Pre_Kernel()*
+ *  1. Lanza las tareas preparatorias del **Pre_Kernel()**
  *  2. Crea la pila de tareas
- *  3. Lanza el *Kernel()*
+ *  3. Lanza el **Kernel()**
  *
- *  El *Kernel()* se encarga de ejecutar el conjunto de hilos (threads) propios del Kernel, así como los
+ *  El **Kernel()** se encarga de ejecutar el conjunto de hilos (threads) propios del Kernel, así como los
  *  definidos para a aplicación, de acuerdo a sus prioridades, y mecanismos de sincronización entre tareas.
  *
  *
@@ -37,7 +37,6 @@
 
 #include <kernel.h>
 
-#ifndef UNIT_TESTS
 void main(void)
 {
 
@@ -53,15 +52,4 @@ void main(void)
 
     kernel.Kernel();
 }
-
-#else
-
-void main (void)
-{
-    // Scripts de depuración
-    kernel.Pre_Kernel();
-
-
-}
-#endif
 

@@ -8,7 +8,13 @@
 #ifndef KERNEL_INCLUDES_PRIVATED_KERNEL_TYPES_H_
 #define KERNEL_INCLUDES_PRIVATED_KERNEL_TYPES_H_
 
+#ifdef _F280049C
 #include    "f28004x_device.h"                      // f28004x Headerfile Include File
+#endif
+
+#ifdef  _F28379D
+#include    "F2837xD_device.h"
+#endif
 
 #define SI      1
 #define NO      0
@@ -18,7 +24,7 @@
 #define ON      1
 #define OFF     0
 
-// Tipos de variables MISRA en minúsculas
+// Tipos de variables MISRA en minï¿½sculas
 typedef Uint16      uint16;
 typedef Uint32      uint32;
 typedef Uint64      uint64;
